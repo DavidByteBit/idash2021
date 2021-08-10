@@ -9,7 +9,6 @@ try:
     n_features=int(program.args[3])
     n_epochs=int(program.args[4])
     batch_size=int(program.args[5])
-    param_report_loss=program.args[6]
 except:
     # parameters default
     n_examples_train=700
@@ -17,15 +16,18 @@ except:
     n_features=1874
     n_epochs=10
     batch_size=128
-    param_report_loss=True
 
 # Train
 start_timer(10)
 start_timer(20)
 
 dense = ml.Dense(n_examples_train, n_features, 1)
-layers = [dense, ml.Output(n_examples_train, approx=True)]
-sgd = ml.SGD(layers, n_epochs, debug=False, report_loss=param_report_loss)
+
+approx=False
+# approx=False execute sigmoid_from_e_x
+# approx=3 execute approx_sigmoid (more fast than sigmoid_from_e_x)
+layers = [dense, ml.Output(n_examples_train, approx=approx)]
+sgd = ml.SGD(layers, n_epochs, debug=False, report_loss=True)
 sgd.layers[0].X.input_from(0)
 sgd.layers[1].Y.input_from(0)
 sgd.reset()
@@ -44,6 +46,7 @@ stop_timer(30)
 stop_timer(10)
 
 #print_ln('testLabel: %s', [x[0].reveal() for x in testLabel])
+print_ln('Results Inference: %s', [x.reveal() for x in res])
 
 total = 0
 i=0
