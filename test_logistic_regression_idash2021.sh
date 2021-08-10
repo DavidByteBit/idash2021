@@ -21,8 +21,6 @@ do
 done
 
 
-
-
 echo "Accuracy $timestamp - $results" >> accuracy.txt
 cat $results | grep accuracy >> accuracy.txt
 echo "Time $timestamp - $results" >> times.txt
