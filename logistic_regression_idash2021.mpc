@@ -1,0 +1,55 @@
+from Compiler import ml
+
+program.options_from_args()
+
+try:
+    # parameters by args
+    n_examples_train=int(program.args[1])
+    n_examples_test=int(program.args[2])
+    n_features=int(program.args[3])
+    n_epochs=int(program.args[4])
+    batch_size=int(program.args[5])
+    param_report_loss=program.args[6]
+except:
+    # parameters default
+    n_examples_train=700
+    n_examples_test=131
+    n_features=1874
+    n_epochs=10
+    batch_size=128
+    param_report_loss=True
+
+# Train
+start_timer(10)
+start_timer(20)
+
+dense = ml.Dense(n_examples_train, n_features, 1)
+layers = [dense, ml.Output(n_examples_train, approx=True)]
+sgd = ml.SGD(layers, n_epochs, debug=False, report_loss=param_report_loss)
+sgd.layers[0].X.input_from(0)
+sgd.layers[1].Y.input_from(0)
+sgd.reset()
+sgd.run(batch_size=batch_size)
+stop_timer(20)
+#print_ln('trainLabel: %s', [x.reveal() for x in sgd.layers[1].Y])
+
+# Inference
+testData = sfix.Matrix(n_examples_test, n_features)
+testData.input_from(0)
+testLabel = sfix.Matrix(n_examples_test, 1)
+testLabel.input_from(0)
+start_timer(30)
+res = sgd.eval(testData)
+stop_timer(30)
+stop_timer(10)
+
+#print_ln('testLabel: %s', [x[0].reveal() for x in testLabel])
+
+total = 0
+i=0
+for x in res:
+  hit=(x.reveal()>0.5)==testLabel[i][0].reveal()
+  total = total + hit
+  i=i+1
+accuracy = sfloat(total) / n_examples_test * 100
+print_ln('accuracy %s % ', accuracy.reveal())
