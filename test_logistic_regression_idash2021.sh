@@ -8,9 +8,9 @@ echo "experiments idash2021" > $results
 n_examples_train=700
 n_examples_test=131
 n_features=1874
-n_epochs=10
+n_epochs=200
 batch_size=128
-n_times=5
+n_times=10
 
 for i in $(seq 1 $n_times)
 do
