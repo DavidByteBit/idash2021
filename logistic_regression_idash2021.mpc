@@ -9,6 +9,7 @@ try:
     n_features=int(program.args[3])
     n_epochs=int(program.args[4])
     batch_size=int(program.args[5])
+    parameter_lambda=int(program.args[6])
 except:
     # parameters default
     n_examples_train=700
@@ -16,6 +17,7 @@ except:
     n_features=1874
     n_epochs=10
     batch_size=128
+    parameter_lambda=1
 
 # Train
 start_timer(10)
@@ -23,11 +25,18 @@ start_timer(20)
 
 dense = ml.Dense(n_examples_train, n_features, 1)
 
-approx=False
+approx=3
 # approx=False execute sigmoid_from_e_x
 # approx=3 execute approx_sigmoid (more fast than sigmoid_from_e_x)
-layers = [dense, ml.Output(n_examples_train, approx=approx)]
+layers = [dense, ml.Output(n_examples_train, approx=approx, debug=False)]
 sgd = ml.SGD(layers, n_epochs, debug=False, report_loss=True)
+
+sgd.always_shuffle = False
+sgd.revealing_correctness = True
+sgd.parameter_lambda = parameter_lambda
+
+#sgd.early_division = False
+
 sgd.layers[0].X.input_from(0)
 sgd.layers[1].Y.input_from(0)
 sgd.reset()
