@@ -1,0 +1,37 @@
+* data normalization in-the-clear.
+* same data by David and num_of_folds = 5
+* regularization code sent by Sikha
+* n_epochs=200, batch_size=128, lambda = 50
+* parameter approx=3 than execute approx_sigmoid
+
+Accuracy LogisticRegression(Sklearn) In-The-Clear   86%
+Accuracy Perceptron(Sklearn) In-The-Clear           90%
+
+accuracy in MP-SPDZ 87.7863 %
+accuracy in MP-SPDZ 89.313 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 88.5496 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 88.5496 %
+
+==================================================================
+
+* data normalization in-the-clear.
+* regularization code sent by Sikha
+* n_epochs=200, batch_size=128, lambda = 1
+* parameter approx=3 than execute approx_sigmoid
+
+Accuracy In-The-Clear 88%
+
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7863 %
+accuracy in MP-SPDZ 88.5496 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 87.7862 %
+accuracy in MP-SPDZ 88.5496 %
+accuracy in MP-SPDZ 88.5496 %
+accuracy in MP-SPDZ 87.7862 %
