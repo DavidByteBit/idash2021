@@ -2202,7 +2202,8 @@ class SGD(Optimizer):
     :param n_epochs: number of epochs for training
     :param report_loss: disclose and print loss
     """
-    def __init__(self, layers, n_epochs, debug=False, report_loss=None):
+    def __init__(self, layers, n_epochs, debug=False, report_loss=None): 
+        self.parameter_lambda = 1
         self.momentum = 0.9
         self.layers = layers
         self.n_epochs = n_epochs
@@ -2213,6 +2214,7 @@ class SGD(Optimizer):
             for theta in layer.thetas():
                 self.delta_thetas.append(theta.same_shape())
         self.gamma = MemValue(cfix(0.01))  # gamma is our learning rate
+        print_ln('self.gamma: %s', self.gamma)
         self.debug = debug
         super(SGD, self).__init__(report_loss)
 
@@ -2250,7 +2252,7 @@ class SGD(Optimizer):
 
                 ### added by sikha
                 theta_penalty = theta.get_vector(base, size)
-                pre_trunc_penalty = theta_penalty.v * rate.v
+                pre_trunc_penalty = theta_penalty.v * rate.v * self.parameter_lambda
                 k2 = max(rate.k,theta_penalty.k) + rate.f
                 m2 = rate.f + int(log_batch_size)
                 if self.early_division:
